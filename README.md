@@ -16,7 +16,7 @@ This tool resizes image files.
 
     - Options are as follows:
 
-        |option name|description|requred|default|
+        |option name|description|required|default|
         | ---- | ---- | ---- | ---- |
         |--input-file-names|image file names to resize|Y|-|
         |--out-dir|output files directory|N|./output/|
