@@ -13,7 +13,9 @@ This tool resizes image files.
 
 #### CUI
 - `python image_resizer.py [options]`
+
     - Options are as follows:
+
         |option name|description|requred|default|
         | ---- | ---- | ---- | ---- |
         |--input-file-names|image file names to resize|Y|-|
