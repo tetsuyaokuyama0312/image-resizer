@@ -67,8 +67,8 @@ if __name__ == '__main__':
     parser.add_argument('--input-file-names', nargs='*', required=True)
     parser.add_argument('--out-dir', default=DEFAULT_OUT_DIR)
     parser.add_argument('--out-extension', default=DEFAULT_OUT_EXT)
-    parser.add_argument('--width', default=DEFAULT_WIDTH)
-    parser.add_argument('--height', default=DEFAULT_HEIGHT)
+    parser.add_argument('--width', type=int, default=DEFAULT_WIDTH)
+    parser.add_argument('--height', type=int, default=DEFAULT_HEIGHT)
     args = parser.parse_args()
     # ignore directories
     input_file_names = list(filter(os.path.isfile, args.input_file_names))
