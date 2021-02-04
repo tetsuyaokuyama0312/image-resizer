@@ -15,19 +15,24 @@ INPUT_FILE_TYPES = [
 ]
 
 
-def on_select_file_button_click():
-    ini_dir = infile_text.get(1.0, 'end -1c')
+def on_select_files_button_click():
+    in_files = infile_text.get(1.0, 'end -1c')
 
-    def get_dir_name(path: str):
-        head_path = path.split()[0]
+    def get_ini_dir(in_paths: str):
+        head_path = in_paths.split()[0]
         return os.path.basename(head_path) if os.path.isdir(head_path) else os.path.dirname(head_path)
 
-    ini_dir = get_dir_name(ini_dir) if ini_dir else os.path.abspath(os.path.dirname(__file__))
+    ini_dir = get_ini_dir(in_files) if in_files else os.path.abspath(os.path.dirname(__file__))
     file_names = fd.askopenfilenames(filetypes=INPUT_FILE_TYPES,
                                      initialdir=ini_dir)
     if file_names:
-        infile_text.delete(1.0, 'end')
-        infile_text.insert(1.0, file_names)
+        if in_files:
+            infile_text.insert('end', ' ')
+        infile_text.insert('end', file_names)
+
+
+def on_clear_files_button_click():
+    infile_text.delete(1.0, 'end')
 
 
 def on_select_dir_button_click():
@@ -97,8 +102,10 @@ infile_label = tk.Label(text='input file names')
 infile_label.place(x=POS_X, y=10)
 infile_text = tk.Text(width=50)
 infile_text.place(x=POS_X, y=30, height=50)
-infile_button = tk.Button(root, text='select files', width=15, height=30, command=on_select_file_button_click)
+infile_button = tk.Button(root, text='select files', width=15, height=30, command=on_select_files_button_click)
 infile_button.place(x=POS_X + 365, y=30, height=20)
+infile_clear_button = tk.Button(root, text='clear files', width=15, height=30, command=on_clear_files_button_click)
+infile_clear_button.place(x=POS_X + 365, y=60, height=20)
 
 out_dir_label = tk.Label(text='output directory (default = ./output/)')
 out_dir_label.place(x=POS_X, y=90)
