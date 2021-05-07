@@ -19,6 +19,7 @@ def on_select_files_button_click():
     in_files = infile_text.get(1.0, 'end -1c')
 
     def get_ini_dir(in_paths: str):
+        # get initial directory from inputted path
         head_path = in_paths.split()[0]
         return os.path.basename(head_path) if os.path.isdir(head_path) else os.path.dirname(head_path)
 
@@ -26,6 +27,7 @@ def on_select_files_button_click():
     file_names = fd.askopenfilenames(filetypes=INPUT_FILE_TYPES,
                                      initialdir=ini_dir)
     if file_names:
+        # display selected files
         if in_files:
             infile_text.insert('end', ' ')
         infile_text.insert('end', file_names)
@@ -36,12 +38,14 @@ def on_clear_files_button_click():
 
 
 def on_select_dir_button_click():
-    out_dir = out_dir_text.get(1.0, 'end -1c')
-    if not os.path.exists(out_dir):
-        out_dir = os.path.abspath(os.path.dirname(__file__))
+    # get initial directory from inputted path
+    ini_dir = out_dir_text.get(1.0, 'end -1c')
+    if not os.path.exists(ini_dir):
+        ini_dir = os.path.abspath(os.path.dirname(__file__))
 
-    dir_name = fd.askdirectory(initialdir=out_dir)
+    dir_name = fd.askdirectory(initialdir=ini_dir)
     if dir_name:
+        # display selected directory
         out_dir_text.delete(1.0, 'end')
         out_dir_text.insert(1.0, dir_name)
 
@@ -49,11 +53,12 @@ def on_select_dir_button_click():
 def on_resize_start_button_click():
     # get parameters
     input_files_text = infile_text.get(1.0, 'end -1c')
-    # ignore directories
+    # get input files(ignore directories)
     input_files = list(filter(os.path.isfile, input_files_text.split())) if input_files_text else None
     if not input_files:
         status.set('Could not get input files')
         return
+    # get optional params
     optional_params = get_optional_params()
 
     # define callback
@@ -72,6 +77,7 @@ def on_resize_start_button_click():
 
 def get_optional_params():
     optional_params = {}
+
     out_dir = out_dir_text.get(1.0, 'end -1c')
     if out_dir:
         optional_params['out_dir'] = out_dir
@@ -87,6 +93,7 @@ def get_optional_params():
     height = height_text.get(1.0, 'end -1c')
     if height:
         optional_params['height'] = int(height)
+
     return optional_params
 
 
